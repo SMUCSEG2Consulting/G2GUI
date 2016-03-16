@@ -16,14 +16,19 @@ For example, to access the 'hello' endpoint of the staging server, use:
 Follow the directions on their site
 #### Load our code into the droplet
 Go into /var/www, delete the html directory and clone this repository with
-`https://github.com/SMUCSEG2Consulting/DedmanPickup`
+`git clone https://github.com/SMUCSEG2Consulting/DedmanPickup`
 #### Setup MySQL
 The password for MySQL is in /etc/motd.tail
+
 Find the password, use it to login as follows: `mysql -u root -p` and then enter the password.
+
 Change the password `SET PASSWORD FOR 'root'@'localhost' = PASSWORD('');`\
 #### Make sure it works.
 Find your droplet's IP on the DigitalOcean site.
+
 Go to `yourIP` in a web browser. You should see the Ionic app.
+
 Go to `yourIP/slim/public/index.php/hello` in a web browser. You should see the slim homepage.
+
 If you don't see one or both of these, contact me (Ian).
 
