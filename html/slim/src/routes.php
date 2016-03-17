@@ -15,6 +15,19 @@ $app->get('/goodbye',
 	}
 );
 
+$app->get('/json',
+	function ($request, $response, $args) {
+		return $response->write(json_encode(array('field' => 'value')));
+	}
+);
+
+$app->get('/json/{id}',
+	function ($request, $response, $args){
+		return $response->write(json_encode(array('id' => $args['id'])));
+	}
+);
+
+
 $app->get('/dbtest',
 	function($request, $response, $args) {
 		$db = $this->dbConn;
