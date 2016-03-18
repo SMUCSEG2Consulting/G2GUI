@@ -27,7 +27,6 @@ INSERT INTO user(name) values("ianjohnson");
 INSERT INTO user(name) values("iqbalkhan");
 INSERT INTO user(name) values("ljbrown");
 
-<<<<<<< HEAD
 INSERT INTO game(sport, time, playerCount, location) values('basketball', '12:30:00',  8, 'Dedman');
 INSERT INTO game(sport, time, playerCount, location) values('soccer', 20, '03:00:00', 'Intramural Fields');
 INSERT INTO game(sport, time, playerCount, location) values('racquetball', '05:30:00', 2, 'Dedman')
