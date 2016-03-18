@@ -28,15 +28,12 @@ $app->get('/json/{id}',
 );
 
 
-$app->get('/dbtest',
+$app->get('/games',
 	function($request, $response, $args) {
 		$db = $this->dbConn;
-		$strToReturn = '';
-
-		foreach($db->query('SELECT * FROM departments') as $row){
-			$strToReturn .= '<br />' . $row['dept_name'];
-		}
-
-		return $response->write('This is a DB Test.' . $strToReturn);
+		$statement = $db->prepare('SELECT * FROM game');
+		$statement->execute();
+		$arr = $statement->fetchAll(PDO::FETCH_ASSOC);
+		return $response->write(json_encode($arr));
 	}
 );

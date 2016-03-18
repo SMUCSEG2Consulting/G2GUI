@@ -18,7 +18,7 @@ return [
         'username' => 'root',
         'password' => '',
         'host' => 'localhost',
-        'dbname' => 'employees',
+        'dbname' => 'pickup',
         'db' => 'mysql'
         ]
     ],
