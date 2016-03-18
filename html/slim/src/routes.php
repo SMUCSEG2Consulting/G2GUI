@@ -37,3 +37,26 @@ $app->get('/games',
 		return $response->write(json_encode($arr));
 	}
 );
+
+$app->get('/game/{id}',
+	function ($request, $response, $args){
+		$db = $this->dbConn;
+
+		$statement = $db->prepare('SELECT * FROM game WHERE id=:id');
+		$statement->execute(array('id' => $args['id']));
+		$arr = $statement->fetch(PDO::FETCH_ASSOC);
+
+		$statement = $db->prepare('SELECT playerID FROM enlist WHERE gameID=:id');
+		$statement->execute(array('id' => $args['id']));
+		$temp = array_values($statement->fetchAll(PDO::FETCH_ASSOC));
+		
+		$ids = array();
+		foreach($temp as $player){
+			$ids[] = $player['playerID'];
+		}
+
+		$arr['playerIDs'] = $ids;
+		
+		return $response->write(json_encode($arr));
+	}
+);
