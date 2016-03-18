@@ -13,7 +13,9 @@ For example, to access the 'hello' endpoint of the staging server, use:
 
 ####To Upload GUI Changes to Staging Server
 Make sure all of your changes are in the `gui` branch of the git repo
+
 Type this into your kernel: `ssh root@104.236.10.218 "./gui.sh"`
+
 Enter the password.
 
 ##To Setup a New Server (I made my own for development)
