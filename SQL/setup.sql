@@ -29,6 +29,7 @@ INSERT INTO user(name) values("ljbrown");
 INSERT INTO game(sport, playerCount, location) values('basketball', 8, 'Dedman');
 INSERT INTO game(sport, playerCount, location) values('soccer', 20, 'Intramural Fields');
 INSERT INTO game(sport, playerCount, location) values('racquetball', 2, 'Dedman');
+INSERT INTO game(sport, playerCount, location) values('basketball', 6, 'Dedman');
 
 INSERT INTO enlist values(1, 1);
 INSERT INTO enlist values(1, 2);
