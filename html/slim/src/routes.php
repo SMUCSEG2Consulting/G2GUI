@@ -98,12 +98,12 @@ $app->get('/deleteUser/{id}',
 	}
 );
 
-$app->get('/deleteGame/{id}',
+$app->get('/deleteGame/{username}',
 	function($request, $response, $args){
 		
 		$db = $this->dbConn;
-		$statement = $db->prepare('DELETE FROM game WHERE id=:id');
-		$statement->execute(array('id' => $args['id']));
+		$statement = $db->prepare('DELETE FROM game WHERE id=:name');
+		$statement->execute(array('name' => $args['username']));
 		return $response->write('Deleted.'); 
 
 	}
