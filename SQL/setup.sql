@@ -6,7 +6,10 @@ USE pickup;
 
 CREATE TABLE user(
 name VARCHAR(100),
-id INT auto_increment PRIMARY KEY
+id INT auto_increment PRIMARY KEY,
+sport1 VARCHAR(20),
+sport2 VARCHAR(20),
+sport3 VARCHAR(20)
 );
 
 CREATE TABLE game(
@@ -18,9 +21,9 @@ location VARCHAR(100)
 );
 
 CREATE TABLE enlist(
-playerID INT,
+playerName VARCHAR(100),
 gameID INT,
-PRIMARY KEY(playerID, gameID)
+PRIMARY KEY(playerName, gameID)
 );
 
 INSERT INTO user(name) values("ianjohnson");
@@ -32,11 +35,11 @@ INSERT INTO game(sport, time, playerCount, location) values('soccer', 20, '03:00
 INSERT INTO game(sport, time, playerCount, location) values('racquetball', '05:30:00', 2, 'Dedman');
 INSERT INTO game(sport, time, playerCount, location) values('basketball', '08:00:00', 6, 'Dedman');
 
-INSERT INTO enlist values(1, 1);
-INSERT INTO enlist values(1, 2);
+INSERT INTO enlist values('ianjohnson', 1);
+INSERT INTO enlist values('ianjohnson', 2);
 
-INSERT INTO enlist values(2, 2);
-INSERT INTO enlist values(2, 3);
+INSERT INTO enlist values('iqbalkhan', 2);
+INSERT INTO enlist values('iqbalkhan', 3);
 
-INSERT INTO enlist values(3, 1);
-INSERT INTO enlist values(3, 3);
+INSERT INTO enlist values('ljbrown', 1);
+INSERT INTO enlist values('ljbrown', 3);
