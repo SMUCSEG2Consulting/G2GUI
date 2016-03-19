@@ -46,16 +46,16 @@ $app->get('/game/{id}',
 		$statement->execute(array('id' => $args['id']));
 		$arr = $statement->fetch(PDO::FETCH_ASSOC);
 
-		$statement = $db->prepare('SELECT playerID FROM enlist WHERE gameID=:id');
+		$statement = $db->prepare('SELECT playerName FROM enlist WHERE gameID=:id');
 		$statement->execute(array('id' => $args['id']));
 		$temp = array_values($statement->fetchAll(PDO::FETCH_ASSOC));
 		
 		$ids = array();
 		foreach($temp as $player){
-			$ids[] = $player['playerID'];
+			$ids[] = $player['playerName'];
 		}
 
-		$arr['playerIDs'] = $ids;
+		$arr['playerNames'] = $ids;
 		
 		return $response->write(json_encode($arr));
 	}
@@ -96,4 +96,16 @@ $app->get('/deleteUser/{id}',
 		$statement->execute(array('id' => $args['id']));
 		return $response->write('Deleted!');	
 	}
+);
+
+$app->get('/deleteGame/{id}',
+	function($request, $response, $args){
+		
+		$db = $this->dbConn;
+		$statement = $db->prepare('DELETE FROM game WHERE id=:id');
+		$statement->execute(array('id' => $args['id']));
+		return $response->write('Deleted.'); 
+
+	}
+
 );
