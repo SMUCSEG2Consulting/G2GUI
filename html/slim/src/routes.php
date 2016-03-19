@@ -60,3 +60,40 @@ $app->get('/game/{id}',
 		return $response->write(json_encode($arr));
 	}
 );
+
+$app->get('/newUser/{name}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+
+		$statement = $db->prepare('SELECT * FROM user WHERE name=:usr');
+		$statement->execute(array('usr'=>$args['name']));
+		$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+		if(!empty($result)){
+			return $response->write('Error - name already taken');
+		}
+
+		$statement = $db->prepare('INSERT INTO user(name) values(:usr)');
+		$statement->execute(array('usr' => $args['name']));
+
+		return $response->write($args['name']);
+	}
+);
+
+$app->get('/users',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		$statement = $db->prepare('SELECT * FROM user');
+		$statement->execute();
+		$arr = $statement->fetchAll(PDO::FETCH_ASSOC);
+		return $response->write(json_encode($arr));
+	}
+);
+
+$app->get('/deleteUser/{id}', 
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		$statement = $db->prepare('DELETE FROM user WHERE id=:id');
+		$statement->execute(array('id' => $args['id']));
+		return $response->write('Deleted!');	
+	}
+);

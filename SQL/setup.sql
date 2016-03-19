@@ -6,7 +6,7 @@ USE pickup;
 
 CREATE TABLE user(
 name VARCHAR(100),
-id INT PRIMARY KEY auto_increment
+id INT auto_increment PRIMARY KEY
 );
 
 CREATE TABLE game(
