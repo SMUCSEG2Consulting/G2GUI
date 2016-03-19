@@ -1,5 +1,7 @@
 angular.module('starter.controllers', [])
 
+
+
 .controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {
@@ -10,11 +12,23 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
+  
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };
+})
+
+.controller('GameDetailCtrl', function($scope, $stateParams, GameData) {
+  $scope.chat = Chats.get($stateParams.chatId);
+})
+
+.controller('LoginCtrl', function($scope, $stateParams, Chats) {
+  $scope.chat = Chats.get($stateParams.chatId);
+})
+
+.controller('GameLobbyCtrl', function($scope, $stateParams, Chats) {
+  $scope.chat = Chats.get($stateParams.chatId);
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
