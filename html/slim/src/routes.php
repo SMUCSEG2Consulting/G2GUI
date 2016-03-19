@@ -89,21 +89,21 @@ $app->get('/users',
 	}
 );
 
-$app->get('/deleteUser/{id}', 
+$app->get('/deleteUser/{username}', 
 	function($request, $response, $args){
 		$db = $this->dbConn;
-		$statement = $db->prepare('DELETE FROM user WHERE id=:id');
-		$statement->execute(array('id' => $args['id']));
+		$statement = $db->prepare('DELETE FROM user WHERE name=:name');
+		$statement->execute(array('name' => $args['username']));
 		return $response->write('Deleted!');	
 	}
 );
 
-$app->get('/deleteGame/{username}',
+$app->get('/deleteGame/{id}',
 	function($request, $response, $args){
 		
 		$db = $this->dbConn;
-		$statement = $db->prepare('DELETE FROM game WHERE id=:name');
-		$statement->execute(array('name' => $args['username']));
+		$statement = $db->prepare('DELETE FROM game WHERE id=:id');
+		$statement->execute(array('id' => $args['id']));
 		return $response->write('Deleted.'); 
 
 	}
