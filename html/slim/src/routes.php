@@ -134,7 +134,8 @@ $app->get('/UpdateUser/{name}/{sport1}/{sport2}/{sport3}',
 		$statement->execute(array(
 			'sport1' => $args['sport1'],
 			'sport2 ' => $args['sport2'], 
-			'sport3' => $args['sport3']
+			'sport3' => $args['sport3'],
+			'name' => $args['name']
 			));
 
 		return $reponse->write("Updated!");
