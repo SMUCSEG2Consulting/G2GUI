@@ -143,6 +143,16 @@ $app->get('/createGame/{hostName}/{time}/{sport}/{location}/{playerCount}',
 				'count' => $args['playerCount']
 		));
 
+		$select = $db->prepare('SELECT max(id) from game');
+		$select->execute();
+		$id = $select->fetch(PDO::FETCH_ASSOC)['max(id)'];
+
+		$statement = $db->prepare('INSERT INTO enlist(playerName, gameID) values(:name, :id)');
+		$statement->execute(array(
+				'name' => $args['hostName'],
+				'id' => $id
+		));
+
 		return $response->write("Success!");
 	}
 );
