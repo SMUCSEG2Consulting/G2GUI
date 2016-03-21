@@ -1,6 +1,20 @@
 <?php
 // Routes
 
+/*
+Random bitstring generation for hash salting
+*/
+function randomBitString($length = 256) {
+    $chars = '0123456789abcdef';
+    $len = strlen($chars);
+    $str = '';
+
+    for ($i = 0; $i < $len; $i++) {
+        $str .= $chars[rand(0, $len - 1)];
+    }
+    return $str;
+}
+
 $app->get('/hello', function ($request, $response, $args) {
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
@@ -72,7 +86,7 @@ $app->get('/newUser/{name}/{pwd}',
 			return $response->write('Error - name already taken');
 		}
 
-		$salt = openssl_random_pseudo_bytes(128);
+		$salt = randomBitString();
 		$hash = hash('sha256', $args['pwd'] . $salt);
 
 		$statement = $db->prepare('INSERT INTO user(name, salt, hash) values(:usr, :sl, :hs)');
@@ -144,5 +158,34 @@ $app->get('/updateUser/{usr}/{s1}/{s2}/{s3}',
 				'username' => $args['usr']
 		));
 		return $response->write(json_encode($args));
+	}
+);
+
+$app->get('/login/{name}/{pwd}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+
+		$statement = $db->prepare('SELECT * FROM user WHERE name=:usr');
+		$statement->execute(array('usr'=>$args['name']));
+		$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+		if(empty($result)){
+			return $response->write('failed');
+		}
+
+		$statement = $db->prepare('SELECT salt, hash FROM user WHERE name = :nm');
+		$statement->execute(array(
+			'nm' => $args['name'],
+		));
+
+		$item = $statement->fetch(PDO::FETCH_ASSOC);
+		$salt = $item['salt'];
+
+		$hash = hash('sha256', $args['pwd'] . $salt);
+
+		if($hash == $item['hash']){
+			return $response->write("success");
+		} else {
+			return $response->write('failed');
+		}
 	}
 );
