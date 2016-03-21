@@ -126,19 +126,16 @@ $app->get('/createGame/{hostName}/{time}/{sport}/{location}/{playerCount}',
 	}
 );
 
-$app->get('/UpdateUser/{name}/{sport1}/{sport2}/{sport3}',
+$app->get('/updateUser/{usr}/{s1}/{s2}/{s3}',
 	function($request, $response, $args){
-
 		$db = $this->dbConn;
-		$statement = $db->prepare('UPDATE user SET sport1=:sport1, sport2=:sport2,sport3=:sport3 WHERE name=:name');
+		$statement = $db->prepare('UPDATE user SET sport1= :one, sport2 = :two, sport3 = :three WHERE name = :username');
 		$statement->execute(array(
-			'sport1' => $args['sport1'],
-			'sport2 ' => $args['sport2'], 
-			'sport3' => $args['sport3'],
-			'name' => $args['name']
-			));
-
-		return $response->write("Updated!");
+				'one' => $args['s1'],
+				'two' => $args['s2'],
+				'three' => $args['s3'],
+				'username' => $args['usr']
+		));
+		return $response->write(json_encode($args));
 	}
-
 );
