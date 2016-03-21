@@ -61,7 +61,7 @@ $app->get('/game/{id}',
 	}
 );
 
-$app->get('/newUser/{name}',
+$app->get('/newUser/{name}/{pwd}',
 	function($request, $response, $args){
 		$db = $this->dbConn;
 
@@ -72,8 +72,15 @@ $app->get('/newUser/{name}',
 			return $response->write('Error - name already taken');
 		}
 
-		$statement = $db->prepare('INSERT INTO user(name) values(:usr)');
-		$statement->execute(array('usr' => $args['name']));
+		$salt = openssl_random_pseudo_bytes(128);
+		$hash = hash('sha256', $args['pwd'] . $salt);
+
+		$statement = $db->prepare('INSERT INTO user(name, salt, hash) values(:usr, :sl, :hs)');
+		$statement->execute(array(
+			'usr' => $args['name'],
+			'sl' => $salt,
+			'hs' => $hash
+		));
 
 		return $response->write($args['name']);
 	}
