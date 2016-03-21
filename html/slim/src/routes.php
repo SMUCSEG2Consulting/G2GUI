@@ -132,6 +132,7 @@ $app->get('/UpdateUser/{name}/{sport1}/{sport2}/{sport3}',
 		$db = $this->dbConn;
 		$statement = $db->prepare('UPDATE user SET sport1=:sport1, sport2=:sport2,sport3=:sport3 WHERE name=:name');
 		$statement->execute(array(
+			'name' => $args['name'],
 			'sport1' => $args['sport1'],
 			'sport2 ' => $args['sport2'], 
 			'sport3' => $args['sport3']
