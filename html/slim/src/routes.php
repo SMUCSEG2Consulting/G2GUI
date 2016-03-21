@@ -127,12 +127,18 @@ $app->get('/createGame/{hostName}/{time}/{sport}/{location}/{playerCount}',
 );
 
 $app->get('/UpdateUser/{name}/{sport1}/{sport2}/{sport3}',
-		function($request, $resopnse, $args){
+	function($request, $resopnse, $args){
 
-			$db = $this->dbConn;
-			$statement = $db->prepare('UPDATE user SET sport1=:sport1, sport2=:sport2,sport3=:sport3 WHERE name=:name');
-			$statement->execute(array('sport1' => $args['sport1'], 'sport2 ' => args['sport2'], 'sport3' => args['sport3']));
-			return $reponse->write("Information updated for $name");
-		}
+		$db = $this->dbConn;
+		$statement = $db->prepare('UPDATE user SET sport1=:sport1, sport2=:sport2,sport3=:sport3 WHERE name=:name');
+		$statement->execute(array(
+			'name' => $args['name'],
+			'sport1' => $args['sport1'],
+			'sport2 ' => $args['sport2'], 
+			'sport3' => $args['sport3']
+			));
+
+		return $reponse->write("Updated!");
+	}
 
 );
