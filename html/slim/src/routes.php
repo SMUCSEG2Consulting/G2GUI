@@ -82,7 +82,7 @@ $app->get('/newUser/{name}',
 $app->get('/users',
 	function($request, $response, $args){
 		$db = $this->dbConn;
-		$statement = $db->prepare('SELECT * FROM user');
+		$statement = $db->prepare('SELECT name, sport1, sport2, sport3 FROM user');
 		$statement->execute();
 		$arr = $statement->fetchAll(PDO::FETCH_ASSOC);
 		return $response->write(json_encode($arr));
