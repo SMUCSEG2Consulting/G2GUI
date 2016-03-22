@@ -199,3 +199,16 @@ $app->get('/login/{name}/{pwd}',
 		}
 	}
 );
+
+
+$app->get('/addUserToGame/{gameID}/{username}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		$statement = $db->prepare('INSERT into enlist(playerName, gameID) values(:username, :gameID)');
+		$statement->execute(array(
+				'username' => $args['username'],
+				'gameID' => $args['gameID']
+		));
+		return $response->write(json_encode($args));
+	}
+);
