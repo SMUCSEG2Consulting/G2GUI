@@ -11,6 +11,15 @@ Access either server with the extension `/slim/public/index.php/{endpoint}`
 For example, to access the 'hello' endpoint of the staging server, use:
 `104.236.10.218/slim/public/index.php/hello`
 
+####Default Login Info
+Three testing accounts exist. Their username:password pairs are as follows:
+
+ianjohnson:ianjohnson
+
+iqbalkhan:iqbalkhan
+
+ljbrown:ljbrown
+
 ####To Upload GUI Changes to Staging Server
 Make sure all of your changes are in the `gui` branch of the git repo
 

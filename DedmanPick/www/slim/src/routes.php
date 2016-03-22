@@ -1,6 +1,20 @@
 <?php
 // Routes
 
+/*
+Random bitstring generation for hash salting
+*/
+function randomBitString($length = 256) {
+    $chars = '0123456789abcdef';
+    $len = strlen($chars);
+    $str = '';
+
+    for ($i = 0; $i < $len; $i++) {
+        $str .= $chars[rand(0, $len - 1)];
+    }
+    return $str;
+}
+
 $app->get('/hello', function ($request, $response, $args) {
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
@@ -61,7 +75,7 @@ $app->get('/game/{id}',
 	}
 );
 
-$app->get('/newUser/{name}',
+$app->get('/newUser/{name}/{pwd}',
 	function($request, $response, $args){
 		$db = $this->dbConn;
 
@@ -72,8 +86,15 @@ $app->get('/newUser/{name}',
 			return $response->write('Error - name already taken');
 		}
 
-		$statement = $db->prepare('INSERT INTO user(name) values(:usr)');
-		$statement->execute(array('usr' => $args['name']));
+		$salt = randomBitString();
+		$hash = hash('sha256', $args['pwd'] . $salt);
+
+		$statement = $db->prepare('INSERT INTO user(name, salt, hash) values(:usr, :sl, :hs)');
+		$statement->execute(array(
+			'usr' => $args['name'],
+			'sl' => $salt,
+			'hs' => $hash
+		));
 
 		return $response->write($args['name']);
 	}
@@ -82,18 +103,18 @@ $app->get('/newUser/{name}',
 $app->get('/users',
 	function($request, $response, $args){
 		$db = $this->dbConn;
-		$statement = $db->prepare('SELECT * FROM user');
+		$statement = $db->prepare('SELECT name, sport1, sport2, sport3 FROM user');
 		$statement->execute();
 		$arr = $statement->fetchAll(PDO::FETCH_ASSOC);
 		return $response->write(json_encode($arr));
 	}
 );
 
-$app->get('/deleteUser/{id}', 
+$app->get('/deleteUser/{username}', 
 	function($request, $response, $args){
 		$db = $this->dbConn;
-		$statement = $db->prepare('DELETE FROM user WHERE id=:id');
-		$statement->execute(array('id' => $args['id']));
+		$statement = $db->prepare('DELETE FROM user WHERE name=:name');
+		$statement->execute(array('name' => $args['username']));
 		return $response->write('Deleted!');	
 	}
 );
@@ -108,4 +129,73 @@ $app->get('/deleteGame/{id}',
 
 	}
 
+);
+
+
+$app->get('/createGame/{hostName}/{time}/{sport}/{location}/{playerCount}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		$statement = $db->prepare('INSERT INTO game(sport, time, playerCount, location) values (:sport, :time, :count, :loc)');
+		$statement->execute(array(
+				'sport' => $args['sport'],
+				'time' => $args['time'],
+				'loc' => $args['location'],
+				'count' => $args['playerCount']
+		));
+
+		$select = $db->prepare('SELECT max(id) from game');
+		$select->execute();
+		$id = $select->fetch(PDO::FETCH_ASSOC)['max(id)'];
+
+		$statement = $db->prepare('INSERT INTO enlist(playerName, gameID) values(:name, :id)');
+		$statement->execute(array(
+				'name' => $args['hostName'],
+				'id' => $id
+		));
+
+		return $response->write("Success!");
+	}
+);
+
+$app->get('/updateUser/{usr}/{s1}/{s2}/{s3}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		$statement = $db->prepare('UPDATE user SET sport1= :one, sport2 = :two, sport3 = :three WHERE name = :username');
+		$statement->execute(array(
+				'one' => $args['s1'],
+				'two' => $args['s2'],
+				'three' => $args['s3'],
+				'username' => $args['usr']
+		));
+		return $response->write(json_encode($args));
+	}
+);
+
+$app->get('/login/{name}/{pwd}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+
+		$statement = $db->prepare('SELECT * FROM user WHERE name=:usr');
+		$statement->execute(array('usr'=>$args['name']));
+		$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+		if(empty($result)){
+			return $response->write('failed');
+		}
+
+		$statement = $db->prepare('SELECT salt, hash FROM user WHERE name = :nm');
+		$statement->execute(array(
+			'nm' => $args['name'],
+		));
+
+		$item = $statement->fetch(PDO::FETCH_ASSOC);
+		$salt = $item['salt'];
+
+		$hash = hash('sha256', $args['pwd'] . $salt);
+
+		if($hash == $item['hash']){
+			return $response->write("success");
+		} else {
+			return $response->write('failed');
+		}
+	}
 );
