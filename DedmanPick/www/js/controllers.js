@@ -23,8 +23,11 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('LoginCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('LoginCtrl', function($scope) {
+  
+  $scope.reroute = function (e) {
+   $state.go('tab.dash');
+  };
 })
 
 .controller('GameLobbyCtrl', function($scope, $stateParams, Chats) {
