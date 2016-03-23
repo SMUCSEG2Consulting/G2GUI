@@ -110,6 +110,18 @@ $app->get('/users',
 	}
 );
 
+$app->get('/user/{username}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		$statement = $db->prepare('SELECT name, sport1, sport2, sport3 FROM user WHERE name = :usr');
+		$statement->execute(array(
+				'usr' => $args['username']
+			));
+		$arr = $statement->fetchAll(PDO::FETCH_ASSOC);
+		return $response->write(json_encode($arr));
+	}
+);
+
 $app->get('/deleteUser/{username}', 
 	function($request, $response, $args){
 		$db = $this->dbConn;
