@@ -21,6 +21,7 @@ CREATE TABLE game(
 id INT PRIMARY KEY auto_increment,
 sport VARCHAR(100),
 time TIME,
+date DATE,
 playerCount INT,
 location VARCHAR(100)
 );
