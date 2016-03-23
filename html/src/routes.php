@@ -110,6 +110,21 @@ $app->get('/addSportForUser/{username}/{sport}',
 	}
 );
 
+$app->get('/removeSportForUser/{username}/{sport}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		
+		$statement = $db->prepare('DELETE FROM sportPreference WHERE username=:usr AND sport =:spr');
+		$statement->execute(array(
+			'usr' => $args['username'],
+			'spr' => $args['sport']
+		));
+
+		return $response->write('success');
+	}
+);
+
+
 $app->get('/user/{username}',
 	function($request, $response, $args){
 		$db = $this->dbConn;
