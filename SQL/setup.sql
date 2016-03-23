@@ -13,7 +13,8 @@ hash VARCHAR(64)
 
 CREATE TABLE sportPreference(
 username VARCHAR(100),
-sport VARCHAR(100)
+sport VARCHAR(100),
+PRIMARY KEY(username, sport)
 );
 
 CREATE TABLE game(
