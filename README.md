@@ -5,11 +5,12 @@ Dedman Pickup
 Simply go to the URL of the staging/production server:
 Staging: `104.236.10.218`
 Production: `104.236.33.141`
+NOTE: THIS IS DEPRECATED. IT NO LONGER WORKS. APP CAN ONLY BE RUN LOCALLY NOW
 
 ####To Access Slim
-Access either server with the extension `/slim/public/index.php/{endpoint}`
+Access either server with the extension `/public/index.php/{endpoint}`
 For example, to access the 'hello' endpoint of the staging server, use:
-`104.236.10.218/slim/public/index.php/hello`
+`104.236.10.218/public/index.php/hello`
 
 ####Default Login Info
 Three testing accounts exist. Their username:password pairs are as follows:
@@ -35,7 +36,7 @@ Go into /var and delete the www directory using `rm -r www` and clone this repos
 Then rename the folder to www using `mv DedmanPickup www`.
 
 #### Setup Permissions
-In /var/www/slim, execute the command `chmod -R 757 *`
+In /var/www/html, execute the command `chmod -R 757 *`
 
 Go into the 
 
@@ -50,7 +51,7 @@ Find your droplet's IP on the DigitalOcean site.
 
 Go to `yourIP` in a web browser. You should see the Ionic app.
 
-Go to `yourIP/slim/public/index.php/hello` in a web browser. You should see the slim homepage.
+Go to `yourIP/public/index.php/json` in a web browser. You should see a little JSON object.
 
 If you don't see one or both of these, contact me (Ian).
 
