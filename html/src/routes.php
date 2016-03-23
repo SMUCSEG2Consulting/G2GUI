@@ -189,7 +189,7 @@ $app->get('/deleteGame/{id}',
 $app->get('/createGame/{hostName}/{time}/{sport}/{location}/{playerCount}',
 	function($request, $response, $args){
 		$db = $this->dbConn;
-		$statement = $db->prepare('INSERT INTO game(sport, time, playerCount, location) values (:sport, :time, :count, :loc)');
+		$statement = $db->prepare('INSERT INTO game(sport, time, playerCount, location, date) values (:sport, :time, :count, :loc, CURDATE())');
 		$statement->execute(array(
 				'sport' => $args['sport'],
 				'time' => $args['time'],
