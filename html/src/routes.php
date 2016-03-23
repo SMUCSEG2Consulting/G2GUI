@@ -128,7 +128,7 @@ $app->get('/removeSportForUser/{username}/{sport}',
 $app->get('/user/{username}',
 	function($request, $response, $args){
 		$db = $this->dbConn;
-		$statement = $db->prepare('SELECT name, sport1, sport2, sport3 FROM user WHERE name = :usr');
+		$statement = $db->prepare('SELECT sport FROM sportPreference WHERE username = :usr');
 		$statement->execute(array(
 				'usr' => $args['username']
 			));
