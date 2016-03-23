@@ -96,6 +96,20 @@ $app->get('/users',
 	}
 );
 
+$app->get('/addSportForUser/{username}/{sport}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		
+		$statement = $db->prepare('INSERT INTO sportPreference(username, sport) values(:usr, :spr)');
+		$statement->execute(array(
+			'usr' => $args['username'],
+			'spr' => $args['sport']
+		));
+
+		return $response->write('success');
+	}
+);
+
 $app->get('/user/{username}',
 	function($request, $response, $args){
 		$db = $this->dbConn;

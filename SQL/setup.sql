@@ -7,16 +7,18 @@ USE pickup;
 CREATE TABLE user(
 name VARCHAR(100),
 id INT auto_increment PRIMARY KEY,
-sport1 VARCHAR(20),
-sport2 VARCHAR(20),
-sport3 VARCHAR(20),
 salt VARCHAR(256),
 hash VARCHAR(64)
 );
 
+CREATE TABLE sportPreference(
+username VARCHAR(100),
+sport VARCHAR(100)
+);
+
 CREATE TABLE game(
 id INT PRIMARY KEY auto_increment,
-sport VARCHAR(20),
+sport VARCHAR(100),
 time TIME,
 playerCount INT,
 location VARCHAR(100)
@@ -36,6 +38,13 @@ INSERT INTO game(sport, time, playerCount, location) values('basketball', '12:30
 INSERT INTO game(sport, time, playerCount, location) values('soccer', 20, '03:00:00', 'Intramural Fields');
 INSERT INTO game(sport, time, playerCount, location) values('racquetball', '05:30:00', 2, 'Dedman');
 INSERT INTO game(sport, time, playerCount, location) values('basketball', '08:00:00', 6, 'Dedman');
+
+INSERT INTO sportPreference(userID, sport) values(1, "Soccer");
+INSERT INTO sportPreference(userID, sport) values(1, "Basketball");
+
+INSERT INTO sportPreference(userID, sport) values(2, "Tennis");
+INSERT INTO sportPreference(userID, sport) values(2, "Football");
+
 
 INSERT INTO enlist values('ianjohnson', 1);
 INSERT INTO enlist values('ianjohnson', 2);
