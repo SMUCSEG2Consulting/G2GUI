@@ -39,11 +39,11 @@ INSERT INTO game(sport, time, playerCount, location) values('soccer', 20, '03:00
 INSERT INTO game(sport, time, playerCount, location) values('racquetball', '05:30:00', 2, 'Dedman');
 INSERT INTO game(sport, time, playerCount, location) values('basketball', '08:00:00', 6, 'Dedman');
 
-INSERT INTO sportPreference(userID, sport) values(1, "Soccer");
-INSERT INTO sportPreference(userID, sport) values(1, "Basketball");
+INSERT INTO sportPreference(username, sport) values('ianjohnson', "Soccer");
+INSERT INTO sportPreference(username, sport) values('ianjohnson', "Basketball");
 
-INSERT INTO sportPreference(userID, sport) values(2, "Tennis");
-INSERT INTO sportPreference(userID, sport) values(2, "Football");
+INSERT INTO sportPreference(username, sport) values('iqbalkhan', "Tennis");
+INSERT INTO sportPreference(username, sport) values('iqbalkhan', "Football");
 
 
 INSERT INTO enlist values('ianjohnson', 1);
