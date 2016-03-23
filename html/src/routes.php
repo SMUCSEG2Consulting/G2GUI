@@ -141,7 +141,7 @@ $app->get('/gamesForUser/{username}',
 	function($request, $response, $args){
 		$db = $this->dbConn;
 
-		$statement = $db->prepare('SELECT g.sport, time, playerCount, location FROM enlist e, game g WHERE e.username = :usr AND e.gameID = g.id');
+		$statement = $db->prepare('SELECT g.sport, time, playerCount, location FROM enlist e, game g WHERE e.playerName = :usr AND e.gameID = g.id');
 		$statement->execute(array(
 				'usr' => $args['username']
 			));
@@ -196,7 +196,7 @@ $app->get('/deleteGame/{id}',
 
 		$statement = $db->prepare('DELETE FROM enlist WHERE gameID=:id');
 		$statement->execute(array('id' => $args['id']));
-		
+
 		return $response->write('Deleted.'); 
 
 	}
