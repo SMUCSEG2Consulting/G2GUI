@@ -137,6 +137,20 @@ $app->get('/user/{username}',
 	}
 );
 
+$app->get('/gamesForUser/{username}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+
+		$statement = $db->prepare('SELECT g.sport, time, playerCount, location FROM enlist e, game g WHERE e.playerName = :usr AND e.gameID = g.id');
+		$statement->execute(array(
+				'usr' => $args['username']
+			));
+		$arr = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+		return $response->write(json_encode($arr));
+	}
+);
+
 $app->get('/deleteUser/{username}/{password}', 
 	function($request, $response, $args){
 		
@@ -179,6 +193,10 @@ $app->get('/deleteGame/{id}',
 		$db = $this->dbConn;
 		$statement = $db->prepare('DELETE FROM game WHERE id=:id');
 		$statement->execute(array('id' => $args['id']));
+
+		$statement = $db->prepare('DELETE FROM enlist WHERE gameID=:id');
+		$statement->execute(array('id' => $args['id']));
+
 		return $response->write('Deleted.'); 
 
 	}
