@@ -251,3 +251,13 @@ $app->get('/addUserToGame/{gameID}/{username}',
 		return $response->write(json_encode($args));
 	}
 );
+
+/*delete user from game*/
+$app->get('/deleteUserFromGame/{gameID}/{username}',
+	function($request, $response, $args){
+		$db = $this->dbConn;
+		$statement = $db->prepare('DELETE FROM game WHERE gameID=:gid AND username=:usr');
+		$statement->execute(array('usr' => $args['username'], 'gid' => $args['gameID']));
+		return $response->write('Deleted.'); 
+	}
+);
