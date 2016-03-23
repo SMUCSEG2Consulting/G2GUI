@@ -36,10 +36,10 @@ INSERT INTO user(name, salt, hash) values("ianjohnson", "1jo5OFAVDpC6xaEgt8sSuHc
 INSERT INTO user(name, salt, hash) values("iqbalkhan", "NqXpTZAb6McBvLGf1V3LeBqmlcH16lRpC2xnyefHj5sM3cH2QggKIxXIMKjmVVJNgesAWvCRIGC0Iuxr2uCvqBWMGiEkyrg4puXQ7DBjrqthquNmEzzN9OVWFX257hI1M2CZYUwwPOtqEnku3G3IzSBv9YbcCArb2sUzRxvo1BeAGikPCM8YHysSXZVRQ35wHifpczfp7xoi9ImorJlTIlWoVagaG3fITe93mijTEHwN1w6LURp7Fxr7U78CSHeP", "7b0115f26b32e84008c7f0b4ff973e5529fae472590afd5862b48c85b9b41831");
 INSERT INTO user(name, salt, hash) values("ljbrown", "fUFqiFM8lbnzj7ZFV2bCUzG0TUNQeR3bcc2vO430J14VmEWfjruqMusm3TjWjQ3cq0zLVrbwKEFVjUKJlJnwXtujUqYjxObLxrZwUG6gsCSeCOYDNiEV8XqAqgcXf6c71BumYBquzKVXinLvrcsZNI4Jfv3aSyrItz3ugaan2ZtnieV1jDHsXQs05r52kyqByfHMgE71QR9xXU2cYhYyO3UxgOvMoaGmBlDOwPVc3JsPIomOkGH3fh7o3hqjFlkp", "e5b3e63a86512dfd05271fdcfcc72a4dee8c63670dbf2c66b0d9cb6885aa926f");
 
-INSERT INTO game(sport, time, playerCount, location) values('basketball', '12:30:00',  8, 'Dedman');
-INSERT INTO game(sport, time, playerCount, location) values('soccer', 20, '03:00:00', 'Intramural Fields');
-INSERT INTO game(sport, time, playerCount, location) values('racquetball', '05:30:00', 2, 'Dedman');
-INSERT INTO game(sport, time, playerCount, location) values('basketball', '08:00:00', 6, 'Dedman');
+INSERT INTO game(sport, time, date, playerCount, location) values('basketball', '12:30:00', '2016-2-14' , 8, 'Dedman');
+INSERT INTO game(sport, time, date, playerCount, location) values('soccer', '03:00:00', '2016-6-12' , 20, 'Intramural Fields');
+INSERT INTO game(sport, time, date, playerCount, location) values('racquetball', '05:30:00', '2016-5-25' , 2, 'Dedman');
+INSERT INTO game(sport, time, date, playerCount, location) values('basketball', '08:00:00', '2016-7-28' , 6, 'Dedman');
 
 INSERT INTO sportPreference(username, sport) values('ianjohnson', "Soccer");
 INSERT INTO sportPreference(username, sport) values('ianjohnson', "Basketball");

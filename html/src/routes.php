@@ -31,7 +31,7 @@ $app->get('/json/{id}',
 $app->get('/games',
 	function($request, $response, $args) {
 		$db = $this->dbConn;
-		$statement = $db->prepare('SELECT * FROM game');
+		$statement = $db->prepare('SELECT * FROM game WHERE date >= CURDATE()');
 		$statement->execute();
 		$arr = $statement->fetchAll(PDO::FETCH_ASSOC);
 		return $response->write(json_encode($arr));
