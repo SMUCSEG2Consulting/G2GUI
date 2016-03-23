@@ -193,6 +193,10 @@ $app->get('/deleteGame/{id}',
 		$db = $this->dbConn;
 		$statement = $db->prepare('DELETE FROM game WHERE id=:id');
 		$statement->execute(array('id' => $args['id']));
+
+		$statement = $db->prepare('DELETE FROM enlist WHERE gameID=:id');
+		$statement->execute(array('id' => $args['id']));
+		
 		return $response->write('Deleted.'); 
 
 	}
