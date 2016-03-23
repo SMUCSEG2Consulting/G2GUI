@@ -110,12 +110,39 @@ $app->get('/users',
 	}
 );
 
-$app->get('/deleteUser/{username}', 
+$app->get('/deleteUser/{username}/{password}', 
 	function($request, $response, $args){
+		
 		$db = $this->dbConn;
-		$statement = $db->prepare('DELETE FROM user WHERE name=:name');
-		$statement->execute(array('name' => $args['username']));
-		return $response->write('Deleted!');	
+
+		$statement = $db->prepare('SELECT * FROM user WHERE name=:usr');
+		$statement->execute(array('usr'=>$args['username']));
+		
+		$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+		if(empty($result)){
+			return $response->write('No such user');
+		}
+
+		$statement = $db->prepare('SELECT salt, hash FROM user WHERE name = :nm');
+		$statement->execute(array(
+			'nm' => $args['username'],
+		));
+
+		$item = $statement->fetch(PDO::FETCH_ASSOC);
+		$salt = $item['salt'];
+
+		$hash = hash('sha256', $args['password'] . $salt);
+
+		if($hash == $item['hash']){
+			$statement = $db->prepare('DELETE FROM user WHERE name=:name');
+			$statement->execute(array('name' => $args['username']));
+			return $response->write('Deleted!');
+		} else {
+			return $response->write('wrong pass');
+		}
+
+
+			
 	}
 );
 
